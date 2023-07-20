@@ -53,3 +53,8 @@ def delete_messege(messege_id: int,db: Session = Depends(get_session)):
         )
     db.query(models.Message).filter(models.Message.id == messege_id).delete()
     db.commit()
+
+@router.get(("/{author}"))
+def messege_author(author: str, db: Session = Depends(get_session)):
+    with db as db:
+        return db.query(models.Message).filter(models.Message.author == author).all()
